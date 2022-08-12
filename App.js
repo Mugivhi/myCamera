@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    backgroundColor: 'grey',
+    backgroundColor: '#008080',
     alignSelf: 'flex-start'
   },
   preview: {
