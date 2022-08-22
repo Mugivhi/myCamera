@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView,Image, TouchableOpacity } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
+// import { Icon } from 'react-native-vector-icons/Icon';
 
 export default function App() {
   let cameraRef = useRef();
@@ -53,9 +54,15 @@ export default function App() {
     return (
       <SafeAreaView style={styles.container}>
         <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
+        <TouchableOpacity title="Share" onPress={sharePic}>
+          <Text style={styles.texts}>Share</Text>
+        </TouchableOpacity>
+        {hasMediaLibraryPermission ? <TouchableOpacity title="Save" onPress={savePhoto}>
+           <Text style={styles.texts}>Save</Text>
+        </TouchableOpacity> : undefined}
+        <TouchableOpacity title="Discard" onPress={() => setPhoto(undefined)}>
+          <Text style={styles.texts}>Discard</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }
@@ -63,7 +70,14 @@ export default function App() {
   return (
     <Camera style={styles.container} ref={cameraRef}>
       <View style={styles.buttonContainer}>
-        <Button title="Take Pic" onPress={takePic} />
+       <TouchableOpacity title='capture' onPress={takePic}>
+        {/* <Icon
+        name='add'
+        color="#ccc"
+        size={25}
+        /> */}
+       <Text style={styles.texts}>takePic</Text>
+       </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
     </Camera>
@@ -75,13 +89,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:'grey'
   },
   buttonContainer: {
-    backgroundColor: '#008080',
-    alignSelf: 'flex-start'
+    backgroundColor: 'whitesmoke',
+    position:'absolute',
+    borderRadius:10,
+    bottom:1
   },
   preview: {
     alignSelf: 'stretch',
     flex: 1
+  },
+  texts:{
+    fontSize:25,
+    backgroundColor:'whitesmoke',
+    margin:8,
+    borderRadius:10,
+    padding:10
   }
 });
